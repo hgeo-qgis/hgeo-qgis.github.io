@@ -38,6 +38,6 @@ if (downloadCounter) {
     downloadCounter.textContent = 'Downloads: ' + asset.download_count.toLocaleString(english ? 'en' : 'pt-BR');
     downloadCounter.title = english ? 'Downloads recorded by GitHub. Updates may be delayed.' : 'Downloads registrados pelo GitHub. A atualização pode levar alguns minutos.';
   }).catch(() => {
-    downloadCounter.textContent = english ? 'Downloads: temporarily unavailable' : 'Downloads: temporariamente indisponível';
+    downloadCounter.textContent = english ? 'Download statistics are unavailable. You can still download the plugin.' : 'Estatística indisponível no momento. O download continua disponível.';
   });
 }
