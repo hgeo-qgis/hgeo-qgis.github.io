@@ -26,14 +26,16 @@ lightbox.addEventListener('close', () => {
 const downloadCounter = document.querySelector('[data-download-count]');
 if (downloadCounter) {
   const english = document.documentElement.lang.startsWith('en');
-  fetch('https://api.github.com/repos/haradaeros-hub/hgeo/releases/assets/666968032?t=' + Date.now(), {
+  fetch('https://api.github.com/repos/haradaeros-hub/hgeo/releases/tags/v1.2.3?t=' + Date.now(), {
     cache: 'no-store',
     headers: { Accept: 'application/vnd.github+json' },
     signal: AbortSignal.timeout(10000)
   }).then(response => {
     if (!response.ok) throw new Error('GitHub ' + response.status);
     return response.json();
-  }).then(asset => {
+  }).then(release => {
+    const asset = release.assets.find(item => item.name === 'HGEO_1.2.3.zip');
+    if (!asset) throw new Error('Release asset unavailable');
     if (!Number.isSafeInteger(asset.download_count) || asset.download_count < 0) throw new Error('Invalid count');
     downloadCounter.textContent = 'Downloads: ' + asset.download_count.toLocaleString(english ? 'en' : 'pt-BR');
     downloadCounter.title = english ? 'Downloads recorded by GitHub. Updates may be delayed.' : 'Downloads registrados pelo GitHub. A atualização pode levar alguns minutos.';
